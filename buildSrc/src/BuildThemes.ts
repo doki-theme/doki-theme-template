@@ -6,7 +6,7 @@ import {
   getDisplayName,
   MasterDokiThemeDefinition,
   resolvePaths,
-  StringDictonary,
+  StringDictionary,
 } from "doki-build-source";
 
 type AppDokiThemeDefinition = BaseAppDokiThemeDefinition;
@@ -20,13 +20,6 @@ const {
   masterThemeDefinitionDirectoryPath,
 } = resolvePaths(__dirname);
 
-const templateDirectoryPath = path.resolve(
-  repoDirectory,
-  "buildSrc",
-  "assets",
-  "templates",
-);
-
 // todo: dis
 type DokiThemeJupyter = {
   [k: string]: any;
@@ -35,12 +28,12 @@ type DokiThemeJupyter = {
 
 function buildTemplateVariables(
   dokiThemeDefinition: MasterDokiThemeDefinition,
-  dokiTemplateDefinitions: DokiThemeDefinitions,
+  masterTemplateDefinitions: DokiThemeDefinitions,
   dokiThemeAppDefinition: AppDokiThemeDefinition,
 ): DokiThemeJupyter {
-  const namedColors: StringDictonary<string> = constructNamedColorTemplate(
+  const namedColors: StringDictionary<string> = constructNamedColorTemplate(
     dokiThemeDefinition,
-    dokiTemplateDefinitions
+    masterTemplateDefinitions
   );
   const colorsOverride =
     dokiThemeAppDefinition.overrides.theme?.colors || {};
@@ -56,27 +49,28 @@ function buildTemplateVariables(
 }
 
 function createDokiTheme(
-  dokiFileDefinitionPath: string,
-  dokiThemeDefinition: MasterDokiThemeDefinition,
-  dokiTemplateDefinitions: DokiThemeDefinitions,
-  dokiThemeAppDefinition: AppDokiThemeDefinition
+  masterThemeDefinitionPath: string,
+  masterThemeDefinition: MasterDokiThemeDefinition,
+  appTemplateDefinitions: DokiThemeDefinitions,
+  appThemeDefinition: AppDokiThemeDefinition,
+  masterTemplateDefinitions: DokiThemeDefinitions,
 ) {
   try {
     return {
-      path: dokiFileDefinitionPath,
-      definition: dokiThemeDefinition,
-      stickers: getStickers(dokiThemeDefinition, dokiFileDefinitionPath),
+      path: masterThemeDefinitionPath,
+      definition: masterThemeDefinition,
+      stickers: getStickers(masterThemeDefinition, masterThemeDefinitionPath),
       templateVariables: buildTemplateVariables(
-        dokiThemeDefinition,
-        dokiTemplateDefinitions,
-        dokiThemeAppDefinition,
+        masterThemeDefinition,
+        masterTemplateDefinitions,
+        appThemeDefinition,
       ),
       theme: {},
-      appThemeDefinition: dokiThemeAppDefinition,
+      appThemeDefinition: appThemeDefinition,
     };
   } catch (e) {
     throw new Error(
-      `Unable to build ${dokiThemeDefinition.name}'s theme for reasons ${e}`
+      `Unable to build ${masterThemeDefinition.name}'s theme for reasons ${e}`
     );
   }
 }
