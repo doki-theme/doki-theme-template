@@ -3,17 +3,15 @@ import {
   constructNamedColorTemplate,
   DokiThemeDefinitions,
   evaluateTemplates,
-  getDisplayName,
   MasterDokiThemeDefinition,
   resolvePaths,
   StringDictionary,
 } from "doki-build-source";
+import omit from 'lodash/omit';
+import fs from "fs";
+import path from "path";
 
 type AppDokiThemeDefinition = BaseAppDokiThemeDefinition;
-
-const fs = require("fs");
-
-const path = require("path");
 
 const {
   repoDirectory,
@@ -119,24 +117,31 @@ evaluateTemplates(
 )
   .then((dokiThemes) => {
 
+    // write things for extension
+    const dokiThemeDefinitions = dokiThemes
+      .map((dokiTheme) => {
+        const dokiDefinition = dokiTheme.definition;
+        return {
+          information: omit(dokiDefinition, [
+            "colors",
+            "overrides",
+            "ui",
+            "icons",
+          ]),
+          colors: dokiTheme.appThemeDefinition.colors,
+          stickers: dokiTheme.stickers,
+        };
+      })
+      .reduce((accum: StringDictionary<any>, definition) => {
+        accum[definition.information.id] = definition;
+        return accum;
+      }, {});
+    const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions);
     fs.writeFileSync(
-      path.resolve(themesDirectory, "themes.json"),
-      JSON.stringify(
-        dokiThemes.reduce((accum, dokiTheme) => ({
-          ...accum,
-          [getDisplayName(dokiTheme)]: {
-            id: dokiTheme.definition.id,
-            colors: dokiTheme.templateVariables,
-            name: dokiTheme.definition.displayName,
-          }
-        }), {}),
-        null,
-        2
-      ),
-      {
-        encoding: "utf-8",
-      }
+      path.resolve(repoDirectory, "src", "DokiThemeDefinitions.ts"),
+      `export default ${finalDokiDefinitions};`
     );
+
   })
   .then(() => {
     console.log("Theme Generation Complete!");
