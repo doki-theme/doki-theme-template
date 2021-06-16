@@ -8,32 +8,6 @@ The Doki Theme: <<App>>
 
 # [More Screenshots](https://github.com/doki-theme/doki-theme-jupyter/blob/main/albums/screenshot_album.md)
 
-**About** 
-
-With over **30** themes,
-I think you will find best girl.
-This plugin is for serious Otaku programmers.
-
-You can choose themes from various, Anime, Manga, or Visual Novels:
-
-- DanganRonpa
-- Darling in the Franxx
-- Doki-Doki Literature Club
-- Fate
-- Gate
-- High School DxD
-- Kill La Kill
-- KonoSuba
-- Love Live!
-- Lucky Star
-- Miss Kobayashi's Dragon Maid
-- Neon Genesis Evangelion
-- OreGairu
-- Rascal does not dream of bunny girl senpai
-- Re:Zero
-- Steins Gate
-- Sword Art Online
-
 ---
 
 # Documentation
@@ -41,8 +15,9 @@ You can choose themes from various, Anime, Manga, or Visual Novels:
 - [Installation](#installation)
 - [Usage](#usage)
 - [Miscellaneous](#miscellaneous)
+    - [Contributing](#contributing) 
     - [Theme Requests](#theme-requests)
-    - [Helping the community](#enjoying-the-plugin)
+    - [Helping the community](#enjoying-the-themes)
     - [Feature Requests](#contributions)
 
 # Installation 
@@ -50,6 +25,11 @@ You can choose themes from various, Anime, Manga, or Visual Novels:
 # Usage
 
 # Miscellaneous
+
+## Contributing
+
+If you want to get your workstation set up to work on the plugin,
+then you'll want to check out the [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on what is needed.
 
 ## Theme Requests
 
