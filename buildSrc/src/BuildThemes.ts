@@ -88,16 +88,16 @@ const getStickers = (
   themePath: string
 ) => {
   const secondary =
-    dokiDefinition.stickers.secondary || dokiDefinition.stickers.normal;
+    dokiDefinition.stickers.secondary;
   return {
     default: {
-      path: resolveStickerPath(themePath, dokiDefinition.stickers.default),
+      path: resolveStickerPath(themePath, dokiDefinition.stickers.default.name),
       name: dokiDefinition.stickers.default,
     },
     ...(secondary
       ? {
         secondary: {
-          path: resolveStickerPath(themePath, secondary),
+          path: resolveStickerPath(themePath, secondary.name),
           name: secondary,
         },
       }
@@ -127,7 +127,7 @@ evaluateTemplates(
             "overrides",
             "ui",
             "icons",
-          ]),
+          ]) as Partial<MasterDokiThemeDefinition> & {id: string},
           colors: dokiTheme.appThemeDefinition.colors,
           stickers: dokiTheme.stickers,
         };
