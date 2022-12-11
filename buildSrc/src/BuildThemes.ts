@@ -137,6 +137,11 @@ evaluateTemplates(
         return accum;
       }, {});
     const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions);
+  
+    // Write type definitions
+    if (!fs.existsSync(path.resolve(repoDirectory, "src"))) {
+      fs.mkdirSync(path.resolve(repoDirectory, "src"));
+    }
     fs.writeFileSync(
       path.resolve(repoDirectory, "src", "DokiThemeDefinitions.ts"),
       `export default ${finalDokiDefinitions};`
