@@ -67,8 +67,9 @@ function createDokiTheme(
       appThemeDefinition: appThemeDefinition,
     };
   } catch (e) {
+    console.error(`Unable to build ${masterThemeDefinition.name}'s theme for reasons`, e)
     throw new Error(
-      `Unable to build ${masterThemeDefinition.name}'s theme for reasons ${e}`
+      `Unable to build ${masterThemeDefinition.name}'s theme`
     );
   }
 }
