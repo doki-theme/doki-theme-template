@@ -139,11 +139,12 @@ evaluateTemplates(
     const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions);
   
     // Write type definitions
-    if (!fs.existsSync(path.resolve(repoDirectory, "src"))) {
-      fs.mkdirSync(path.resolve(repoDirectory, "src"));
+    const sourceDirectory = path.resolve(repoDirectory, "src");
+    if (!fs.existsSync(sourceDirectory)) {
+      fs.mkdirSync(sourceDirectory);
     }
     fs.writeFileSync(
-      path.resolve(repoDirectory, "src", "DokiThemeDefinitions.ts"),
+      path.resolve(sourceDirectory, "DokiThemeDefinitions.ts"),
       `export default ${finalDokiDefinitions};`
     );
 
